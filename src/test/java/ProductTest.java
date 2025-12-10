@@ -114,6 +114,6 @@ public class ProductTest {
         BeginStringFilter filterK = new BeginStringFilter("К");
 
         int count = service.countByFilter(batch, filterK);
-        assertEquals(2, count); // Кофе и Кола начинаются на "К"
+        assertEquals(2, count);
     }
 }
