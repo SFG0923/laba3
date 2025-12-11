@@ -8,8 +8,7 @@ import java.util.Objects;
 
 public class ProductBatch {
     private String description;
-    private Weightable[] items; // массив упакованных товаров
-
+    private Weightable[] items;
     public ProductBatch(String description, Weightable[] items) {
         if (items == null || items.length == 0) {
             throw new IllegalArgumentException("Партия должна содержать товары");
