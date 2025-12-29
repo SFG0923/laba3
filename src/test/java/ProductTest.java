@@ -92,7 +92,6 @@ public class ProductTest {
 
     @Test
     public void testProductService() {
-        // Создаем товары
         BulkProduct coffee = new BulkProduct("Кофе", "Арабика");
         BulkProduct cola = new BulkProduct("Кола", "Напиток");
         PieceProduct cookie = new PieceProduct("Печенье", "Шоколадное", 0.05);

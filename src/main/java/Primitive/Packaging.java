@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class Packaging {
     private String name;
-    private double weight; // собственный вес упаковки в кг
+    private double weight;
 
     public Packaging(String name, double weight) {
         if (weight < 0) {
