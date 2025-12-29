@@ -4,7 +4,7 @@ import java.util.Objects;
 import Primitive.Product;
 
 public class PieceProduct extends Product {
-    private double pieceWeight; // вес одной штуки товара в кг
+    private double pieceWeight;
 
     public PieceProduct(String name, String description, double pieceWeight) {
         super(name, description);

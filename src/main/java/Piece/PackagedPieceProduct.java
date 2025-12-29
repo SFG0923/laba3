@@ -7,7 +7,7 @@ import java.util.Objects;
 
 public class PackagedPieceProduct implements Weightable {
     private PieceProduct product;
-    private int quantity; // количество штук товара
+    private int quantity;
     private Packaging packaging;
 
     public PackagedPieceProduct(PieceProduct product, int quantity, Packaging packaging) {
