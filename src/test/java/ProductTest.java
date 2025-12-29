@@ -116,4 +116,42 @@ public class ProductTest {
         int count = service.countByFilter(batch, filterK);
         assertEquals(2, count);
     }
+    //dop
+    @Test
+    public void testProductSetWeights() {
+        Packaging box = new Packaging("Коробка", 0.5);
+        BulkProduct rice = new BulkProduct("Рис", "Длиннозерный");
+        Packaging bag = new Packaging("Пакет", 0.01);
+        PackagedBulkProduct pRice = new PackagedBulkProduct(rice, 1.0, bag);
+        ProductSet set = new ProductSet(box, pRice);
+        assertEquals(1.01, set.getNetWeight(), 0.001);
+        assertEquals(1.51, set.getGrossWeight(), 0.001);
+    }
+    @Test
+    public void testCountByFilterDeep() {
+        ProductService service = new ProductService();
+        BeginStringFilter filter = new BeginStringFilter("С");
+
+        Packaging pkg = new Packaging("Уп", 0.1);
+        BulkProduct sugar = new BulkProduct("Сахар", "Белый");
+        PackagedBulkProduct pSugar = new PackagedBulkProduct(sugar, 1.0, pkg);
+        ProductSet innerSet = new ProductSet(pkg, pSugar);
+        ProductSet outerSet = new ProductSet(pkg, innerSet);
+        Weightable[] items = {outerSet};
+        ProductBatch batch = new ProductBatch("Глубокая партия", items);
+        assertEquals(1, service.countByFilterDeep(batch.getItems(), filter));
+    }
+
+    @Test
+    public void testCheckAllWeighted() {
+        ProductService service = new ProductService();
+        Packaging pkg = new Packaging("Пакет", 0.1);
+        PackagedBulkProduct bulk1 = new PackagedBulkProduct(new BulkProduct("Мука", ""), 2.0, pkg);
+        PackagedBulkProduct bulk2 = new PackagedBulkProduct(new BulkProduct("Соль", ""), 1.0, pkg);
+        PackagedPieceProduct piece = new PackagedPieceProduct(new PieceProduct("Хлеб", "", 0.5), 1, pkg);
+        ProductBatch weightedBatch = new ProductBatch("Весовые", new Weightable[]{bulk1, bulk2});
+        assertTrue(service.checkAllWeighted(weightedBatch.getItems()));
+        ProductBatch mixedBatch = new ProductBatch("Смешанные", new Weightable[]{bulk1, piece});
+        assertFalse(service.checkAllWeighted(mixedBatch.getItems()));
+    }
 }
